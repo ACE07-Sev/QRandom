@@ -4,7 +4,7 @@
 ## Getting Started
 
 ### Prerequisites
-- Python 3.12+
+- Python 3.9+
 
 ### Installation
 `qoin` can be installed with the command :

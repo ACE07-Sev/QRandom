@@ -21,7 +21,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '1.00'
+VERSION = '1.0.1'
 DESCRIPTION = 'Quantum Random Number Generator.'
 LONG_DESCRIPTION = '`qoin` is the analogue of `random` package implemented through gate-based quantum computing.'
 
@@ -36,7 +36,7 @@ setup(
     long_description=long_description,
     packages=find_packages(),
     install_requires=['numpy', 'qiskit', 'qiskit_aer'],
-    keywords=['quantum computing', 'quantum random number generator', 'random', 'qrandom'],
+    keywords=['quantum computing', 'quantum random number generator', 'random', 'qrandom', 'qoin'],
     classifiers=[
         "Development Status :: DONE",
         "Intended Audience :: Developers",
