@@ -1,3 +1,5 @@
+[![PyPI version](https://img.shields.io/pypi/v/qoin)](//pypi.org/project/qoin)
+
 # Qoin
 `qoin` is the analogue of `random` package implemented through gate-based quantum computing.
 
