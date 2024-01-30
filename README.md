@@ -1,5 +1,5 @@
 # QRandom
-`qrandom` is the analogue of `random` package implemented through gate-based quantum computing.
+`qoin` is the analogue of `random` package implemented through gate-based quantum computing.
 
 ## Getting Started
 
@@ -7,16 +7,16 @@
 - Python 3.12+
 
 ### Installation
-`qrandom` can be installed with the command :
+`qoin` can be installed with the command :
 ```
-pip install qrandom
+pip install qoin
 ```
-The default installation of `qrandom` includes `numpy`, `qiskit`, and `qiskit_aer`.
+The default installation of `qoin` includes `numpy`, `qiskit`, and `qiskit_aer`.
 
 ## Usage
 The docs/examples are a good way for understanding how the package works.
 ```
-from qrandom import QRNG
+from qoin import QRNG
 from qiskit_aer import AerSimulator
 
 

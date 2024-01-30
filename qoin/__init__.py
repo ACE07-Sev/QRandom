@@ -14,4 +14,4 @@
 
 __all__ = ['QRNG']
 
-from qrandom.qrng import QRNG
+from qoin.qrng import QRNG
