@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     https://github.com/ACE07-Sev/QRandom/blob/main/LICENSE
+#     https://github.com/ACE07-Sev/Qoin/blob/main/LICENSE
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,6 @@ from __future__ import annotations
 
 __all__ = ['QRNG']
 
-from abc import ABC
 from collections.abc import Iterable
 from typing import Any
 import math
@@ -26,7 +25,7 @@ from qiskit import (QuantumCircuit, execute)
 from qiskit_aer import AerSimulator
 
 
-class QRNG(ABC):
+class QRNG:
     """ `QRNG` class provides random number generation using quantum computing.
     """
     def __init__(self) -> None:
@@ -87,6 +86,15 @@ class QRNG(ABC):
         # Return random integer
         return random_int
 
+    def randbin(self) -> bool:
+        """ Generate a random boolean.
+
+        Returns
+        -------
+        `random_bin` (bool): The random boolean.
+        """
+        return bool(self.randint(0, 2))
+
     def random(self,
                num_digits: int) -> float:
         """ Generate a random float between 0 and 1.
@@ -100,6 +108,12 @@ class QRNG(ABC):
         -------
         `random_float`(float): The random generated float.
         """
+        # Ensure that the number of digits is valid
+        try:
+            num_digits > 0
+        except ValueError:
+            raise ValueError("Number of digits must be greater than 0.")
+
         # Initialize the digit
         random_float = "0."
 
@@ -123,11 +137,17 @@ class QRNG(ABC):
         -------
         (Any): The item selected.
         """
+        # Ensure that the items are iterable
+        try:
+            isinstance(items, Iterable)
+        except TypeError:
+            raise TypeError("Population must be a sequence or set.")
+
         return items[self.randint(0, len(items))]
 
     def choices(self,
                 items: Iterable[Any],
-                num_selections: int) -> Any | Iterable[Any]:
+                num_selections: int) -> Any | list[Any]:
         """ Choose random element(s) from the list of items.
 
         Parameters
@@ -139,12 +159,24 @@ class QRNG(ABC):
 
         Returns
         -------
-        (Any | Iterable[Any]): The item(s) selected.
+        (Any | list[Any]): The item(s) selected.
         """
+        # Ensure that the number of selections is valid
+        try:
+            num_selections > 0
+        except ValueError:
+            raise ValueError("Sample larger than population or is negative.")
+
+        # Ensure that the items are iterable
+        try:
+            isinstance(items, Iterable)
+        except TypeError:
+            raise TypeError("Population must be a sequence or set.")
+
         # Define indices list
         indices = []
 
-        # If number of selections is 1, run `.choice` instead.
+        # If number of selections is 1, run `.choice` instead
         if num_selections == 1:
             return self.choice(items)
 
@@ -156,7 +188,7 @@ class QRNG(ABC):
 
     def sample(self,
                items: Iterable[Any],
-               num_selections: int) -> Any | Iterable[Any]:
+               num_selections: int) -> Any | list[Any]:
         """ Choose random element(s) from the list of items.
 
         Parameters
@@ -168,12 +200,24 @@ class QRNG(ABC):
 
         Returns
         -------
-        (Any | Iterable[Any]): The item(s) selected.
+        (Any | list[Any]): The item(s) selected.
         """
+        # Ensure that the number of selections is valid
+        try:
+            num_selections > 0 and num_selections <= len(items)
+        except ValueError:
+            raise ValueError("Sample larger than population or is negative.")
+
+        # Ensure that the items are iterable
+        try:
+            isinstance(items, Iterable)
+        except TypeError:
+            raise TypeError("Population must be a sequence or set.")
+
         # Define indices list
         indices = []
 
-        # If number of selections is 1, run `.choice` instead.
+        # If number of selections is 1, run `.choice` instead
         if num_selections == 1:
             return self.choice(items)
 
@@ -191,3 +235,24 @@ class QRNG(ABC):
 
         # Return the selections
         return [items[i] for i in indices]
+
+    def shuffle(self,
+                items: Iterable[Any]) -> list[Any]:
+        """ Shuffle the list of items.
+
+        Parameters
+        ----------
+        `items` (list[Any]):
+            The list of items to shuffle.
+
+        Returns
+        -------
+        None
+        """
+        # Ensure that the items are a list
+        try:
+            isinstance(items, Iterable)
+        except TypeError:
+            raise TypeError("The items must be a list.")
+
+        return self.sample(items, len(items))
