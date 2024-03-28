@@ -25,5 +25,18 @@ random_generator = QRNG()
 random_generator.randint(5, 10)
 ```
 
+## Testing
+Run all tests with the command:
+
+```
+py -m pytest tests
+```
+
+Note: if you have installed in a virtual environment, remember to install pytest in the same environment using:
+
+```
+pip install pytest
+```
+
 ## License
 The package is released under the GPL Ver 3.0 license.

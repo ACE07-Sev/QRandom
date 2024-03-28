@@ -1,16 +1,18 @@
-# Copyright 2023-2024 Amir Ali Malekani Nezhad.
-#
-# Licensed under the GPL Ver 3.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     https://github.com/ACE07-Sev/Qoin/blob/main/LICENSE
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Qoin provides random number generation using quantum computing.
+# Copyright (C) 2024  Amir Ali Malekani Nezhad
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from __future__ import annotations
 
@@ -21,8 +23,9 @@ from typing import Any
 import math
 
 # Import `Qiskit` modules
-from qiskit import (QuantumCircuit, execute)
-from qiskit_aer import AerSimulator
+from qiskit import QuantumCircuit
+from qiskit.primitives import BackendSampler
+from qiskit_aer.aerprovider import AerSimulator
 
 
 class QRNG:
@@ -31,7 +34,7 @@ class QRNG:
     def __init__(self) -> None:
         """ Initialize a `QRNG` instance.
         """
-        self._backend = AerSimulator()
+        self._backend = BackendSampler(AerSimulator())
 
     def randint(self,
                 lowerbound: int,
@@ -69,12 +72,19 @@ class QRNG:
         circuit.measure(range(num_qubits), range(num_qubits))
 
         # Run the circuit
-        counts = execute(circuit,
-                         self._backend,
-                         shots=1).result().get_counts()
+        result = self._backend.run(circuit, shots=1).result()
+
+        # Extract the quasi-probability distribution from the first result
+        quasi_dist = result.quasi_dists[0]
+
+        # Convert the quasi-probability distribution to counts
+        counts = {bin(k)[2:].zfill(num_qubits): int(v * 1) for k, v in quasi_dist.items()}
+
+        # Sort the counts by their keys (basis states)
+        counts = dict(sorted(counts.items()))
 
         # Postprocess measurement result
-        random_int = int(list(dict(counts).keys())[0], 2)
+        random_int = int(list(counts.keys())[0], 2)
 
         # Scale the integer back
         random_int = int(random_int*scale)
