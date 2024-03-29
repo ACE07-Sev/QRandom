@@ -20,6 +20,7 @@ __all__ = ['TestQRNG']
 
 from qoin.qrng import QRNG
 
+
 qrng = QRNG()
 
 class TestQRNG:

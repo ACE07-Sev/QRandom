@@ -14,18 +14,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from setuptools import setup, find_packages
 import codecs
 import os
+from setuptools import setup, find_packages
+
 
 here = os.path.abspath(os.path.dirname(__file__))
 
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '1.0.5'
+VERSION = '1.0.6'
 DESCRIPTION = 'Quantum Random Number Generator.'
-LONG_DESCRIPTION = '`qoin` is the analogue of `random` package implemented through gate-based quantum computing.'
+LONG_DESCRIPTION = '`qoin` is the analogue of `random` package implemented through \
+gate-based quantum computing.'
 
 # Setting up
 setup(
@@ -38,7 +40,8 @@ setup(
     long_description=long_description,
     packages=find_packages(),
     install_requires=['numpy', 'qiskit', 'qiskit_aer'],
-    keywords=['quantum computing', 'quantum random number generator', 'random', 'qrandom', 'qoin'],
+    keywords=['quantum computing', 'quantum random number generator', 'random',
+              'qrandom', 'qoin'],
     classifiers=[
         "Development Status :: DONE",
         "Intended Audience :: Developers",

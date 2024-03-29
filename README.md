@@ -1,4 +1,5 @@
 [![PyPI version](https://img.shields.io/pypi/v/qoin)](//pypi.org/project/qoin)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 # Qoin
 `qoin` is the analogue of `random` package implemented through gate-based quantum computing.
