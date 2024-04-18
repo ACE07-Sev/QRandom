@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qoin"
-version = "1.0.6"
+version = "1.0.7"
 description = "Quantum Random Number Generator."
 readme = "README.md"
 authors = [{ name = "Amir Ali Malekani Nezhad", email = "amiralimlk07@gmail.com" }]

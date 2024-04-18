@@ -38,25 +38,26 @@ class QRNG:
 
     def randint(self,
                 lowerbound: int,
-                upperbound: int,) -> int:
+                upperbound: int) -> int:
         """ Generate a random integer from [lowerbound, upperbound).
 
         Parameters
         ----------
-        `lowerbound` (int):
+        `lowerbound` : int
             The lowerbound of the selection.
-        `upperbound` (int):
+        `upperbound` : int
             The upperbound of the selection.
 
         Returns
         -------
-        `random_int` (int): The random number generated from the selection.
+        `return_int` : int
+            The random number generated from the selection.
 
         Raises
         ------
-        TypeError:
+        TypeError
             If the lowerbound and upperbound are not integers.
-        ValueError:
+        ValueError
             If the upperbound is less than the lowerbound.
 
         Notes
@@ -67,6 +68,7 @@ class QRNG:
         measured to extract the random integer.
 
         The random integer is generated using the following steps:
+
         1. Calculate the difference between the upperbound and lowerbound.
         2. Scale the difference to the closest power of 2.
         3. Calculate the number of qubits needed to represent the selection.
@@ -76,12 +78,11 @@ class QRNG:
         7. Convert the quasi-probability distribution to counts.
         8. Postprocess the measurement result.
         9. Scale the integer back.
-        10. Shift the random integer's range from [0;upperbound-lowerbound-1]
-            to [lowerbound;upperbound-1].
+        10. Shift range from [0;upperbound-lowerbound-1] to [lowerbound;upperbound-1].
         11. Return the random integer.
 
-        Examples
-        --------
+        Usage
+        -----
         >>> random_integer = qrng.randint(0, 10)
         >>> type_checker = isinstance(random_integer, int)
         >>> bound_checker = random_integer < 10 and random_integer >= 0
@@ -154,7 +155,8 @@ class QRNG:
 
         Returns
         -------
-        `random_bin` (bool): The random boolean.
+        `random_bin` : bool
+            The random boolean.
 
         Notes
         -----
@@ -163,6 +165,7 @@ class QRNG:
         The distribution is then measured to extract the random boolean.
 
         The random boolean is generated using the following steps:
+
         1. Create a uniform distribution over all possible booleans.
         2. Apply measurement to the distribution.
         3. Extract the quasi-probability distribution from the result.
@@ -181,23 +184,24 @@ class QRNG:
         return bool(self.randint(0, 2))
 
     def random(self,
-               num_digits: int,) -> float:
+               num_digits: int) -> float:
         """ Generate a random float between 0 and 1.
 
         Parameters
         ----------
-        `num_digits` (int):
+        `num_digits` : int
             The number of bits used to represent the angle divider.
 
         Returns
         -------
-        `random_float`(float): The random generated float.
+        `random_float` : float
+            The random generated float.
 
         Raises
         ------
-        TypeError:
+        TypeError
             If the number of digits is not an integer.
-        ValueError:
+        ValueError
             If the number of digits is less than or equal to 0.
 
         Notes
@@ -208,6 +212,7 @@ class QRNG:
         random float.
 
         The random float is generated using the following steps:
+
         1. Calculate the number of bits used to represent the angle divider.
         2. Create a uniform distribution over all possible floats.
         3. Apply measurement to the distribution.
@@ -252,21 +257,22 @@ class QRNG:
         return float(random_float)
 
     def choice(self,
-               items: MutableSequence[Any],) -> Any:
+               items: MutableSequence[Any]) -> Any:
         """ Choose a random element from the list of items.
 
         Parameters
         ----------
-        `items` (MutableSequence[Any]):
+        `items` : MutableSequence[Any]
             The list of items.
 
         Returns
         -------
-        (Any): The item selected.
+        Any
+            The item selected.
 
         Raises
         ------
-        TypeError:
+        TypeError
             If the items are not an instance of MutableSequence.
 
         Notes
@@ -277,6 +283,7 @@ class QRNG:
         element.
 
         The random element is selected using the following steps:
+
         1. Create a uniform distribution over all possible elements.
         2. Apply measurement to the distribution.
         3. Extract the quasi-probability distribution from the result.
@@ -292,7 +299,7 @@ class QRNG:
         >>> qrng.choice(1)
         Traceback (most recent call last):
             ...
-        TypeError: Population must be a MutableSequence or set.
+        TypeError: Population must be a MutableSequence.
         """
         # Ensure that the items are MutableSequence
         if not isinstance(items, MutableSequence):
@@ -302,25 +309,26 @@ class QRNG:
 
     def choices(self,
                 items: MutableSequence[Any],
-                num_selections: int,) -> Any | list[Any]:
+                num_selections: int) -> Any | list[Any]:
         """ Choose random element(s) from the list of items.
 
         Parameters
         ----------
-        `items` (MutableSequence[Any]):
+        `items` : MutableSequence[Any]
             The list of items.
-        `num_selections` (int):
+        `num_selections` : int
             The number of selections.
 
         Returns
         -------
-        (Any | list[Any]): The item(s) selected.
+        Any | list[Any]
+            The item(s) selected.
 
         Raises
         ------
-        TypeError:
+        TypeError
             If the items are not MutableSequence.
-        ValueError:
+        ValueError
             If the number of selections is less than or equal to 0.
 
         Notes
@@ -331,6 +339,7 @@ class QRNG:
         random element(s).
 
         The random element(s) are selected using the following steps:
+
         1. Calculate the number of selections.
         2. Create a uniform distribution over all possible elements.
         3. Apply measurement to the distribution.
@@ -347,7 +356,7 @@ class QRNG:
         >>> qrng.choices(1, 3)
         Traceback (most recent call last):
             ...
-        TypeError: Population must be a MutableSequence or set.
+        TypeError: Population must be a MutableSequence.
         >>> qrng.choices([1, 2, 3, 4, 5], 0)
         Traceback (most recent call last):
             ...
@@ -355,7 +364,7 @@ class QRNG:
         """
         # Ensure that the items are MutableSequence
         if not isinstance(items, MutableSequence):
-            raise TypeError("Population must be a MutableSequence or set.")
+            raise TypeError("Population must be a MutableSequence.")
 
         # Ensure that the number of selections is valid
         if num_selections <= 0:
@@ -376,25 +385,26 @@ class QRNG:
 
     def sample(self,
                items: MutableSequence[Any],
-               num_selections: int,) -> Any | list[Any]:
+               num_selections: int) -> Any | list[Any]:
         """ Choose random element(s) from the list of items.
 
         Parameters
         ----------
-        `items` (MutableSequence[Any]):
+        `items` : MutableSequence[Any]
             The list of items.
-        `num_selections` (int):
+        `num_selections` : int
             The number of selections.
 
         Returns
         -------
-        (Any | list[Any]): The item(s) selected.
+        Any | list[Any]
+            The item(s) selected.
 
         Raises
         ------
-        TypeError:
+        TypeError
             If the items are not MutableSequence.
-        ValueError:
+        ValueError
             If the number of selections is less than or equal to 0.
 
         Notes
@@ -405,6 +415,7 @@ class QRNG:
         random element(s).
 
         The random element(s) are selected using the following steps:
+
         1. Calculate the number of selections.
         2. Create a uniform distribution over all possible elements.
         3. Apply measurement to the distribution.
@@ -416,22 +427,22 @@ class QRNG:
         Examples
         --------
         >>> random_samples = qrng.sample([1, 2, 3, 4, 5], 3)
-        >>> bound_checker = all(random_sample in [1, 2, 3, 4, 5]\
-            for random_sample in random_samples)
+        >>> bound_checker = all(random_sample in [1, 2, 3, 4, 5]
+        ... for random_sample in random_samples)
         >>> unique_checker = len(set(random_samples)) == 3
         >>> bound_checker and unique_checker
         True
         >>> qrng.sample(1, 3)
         Traceback (most recent call last):
             ...
-        TypeError: Population must be a MutableSequence or set.
+        TypeError: Population must be a MutableSequence.
         >>> qrng.sample([1, 2, 3, 4, 5], 6)
         Traceback (most recent call last):
             ...
         ValueError: Sample larger than population or is negative.
         """
         if not isinstance(items, MutableSequence):
-            raise TypeError("Population must be a MutableSequence or set.")
+            raise TypeError("Population must be a MutableSequence.")
 
         # Ensure that the number of selections is valid
         if not (num_selections > 0 and num_selections <= len(items)):
@@ -460,21 +471,22 @@ class QRNG:
         return [items[i] for i in indices]
 
     def shuffle(self,
-                items: MutableSequence[Any],) -> list[Any]:
+                items: MutableSequence[Any]) -> list[Any]:
         """ Shuffle the list of items.
 
         Parameters
         ----------
-        `items` (list[Any]):
+        `items` : list[Any]
             The list of items to shuffle.
 
         Returns
         -------
-        (list[Any]): The shuffled list of items.
+        list[Any]
+            The shuffled list of items.
 
         Raises
         ------
-        TypeError:
+        TypeError
             If the items are not a list.
 
         Notes
@@ -485,6 +497,7 @@ class QRNG:
         permutation.
 
         The list of items is shuffled using the following steps:
+
         1. Create a uniform distribution over all possible permutations.
         2. Apply measurement to the distribution.
         3. Extract the quasi-probability distribution from the result.
@@ -500,11 +513,11 @@ class QRNG:
         >>> qrng.shuffle(1)
         Traceback (most recent call last):
             ...
-        TypeError: Population must be a MutableSequence or set.
+        TypeError: Population must be a MutableSequence.
         """
         # Ensure that the items are a list
         if not isinstance(items, list):
-            raise TypeError("Population must be a MutableSequence or set.")
+            raise TypeError("Population must be a MutableSequence.")
 
         return self.sample(items, len(items))
 

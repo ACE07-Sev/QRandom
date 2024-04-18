@@ -16,7 +16,7 @@
 
 import codecs
 import os
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages # type: ignore
 
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -24,7 +24,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '1.0.6'
+VERSION = '1.0.7'
 DESCRIPTION = 'Quantum Random Number Generator.'
 LONG_DESCRIPTION = '`qoin` is the analogue of `random` package implemented through \
 gate-based quantum computing.'
