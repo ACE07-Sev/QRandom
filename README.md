@@ -39,5 +39,13 @@ Note: if you have installed in a virtual environment, remember to install pytest
 pip install pytest
 ```
 
+## Documentation
+To generate the documentation, run commands:
+
+```
+cd docs
+.\make html
+```
+
 ## License
 The package is released under the GPL Ver 3.0 license.
